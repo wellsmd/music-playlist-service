@@ -1,1 +1,92 @@
-PARTICIPANTS: use this file for creating the class diagram in mastery task 01
+@startuml
+
+class AddSongToPlaylistActivity {
+  - log : Logger
+  - playlistDao : PlaylistDao
+  - albumTrackDao : AlbumTrackDao
+  + handleRequest(AddSongToPlaylistRequest, Context) : AddSongToPlaylistResult
+}
+
+class CreatePlaylistActivity {
+  - log : Logger
+  - playlistDao : PlaylistDao
+  + handleRequest(CreatePlaylistRequest, Context) : CreatePlaylistResult
+}
+
+class GetPlaylistActivity {
+  - log : Logger
+  - playlistDao : PlaylistDao
+  + handleRequest(GetPlaylistRequest, Context) : GetPlaylistResult
+}
+
+class GetPlaylistSongsActivity {
+  - log : Logger
+  - playlistDao : PlaylistDao
+  + handleRequest(GetPlaylistSongsRequest, Context) : GetPlaylistSongsResult
+}
+
+class UpdatePlaylistActivity {
+  - log : Logger
+  - playlistDao : PlaylistDao
+  + handleRequest(UpdatePlaylistRequest, Context) : UpdatePlaylistResult
+}
+
+class AlbumTrackDao {
+  - dynamoDbMapper : DynamoDBMapper
+}
+
+class PlaylistDao {
+  - dynamoDbMapper : DynamoDBMapper
+  + getPlaylist(String) : Playlist
+}
+
+class AlbumTrack {
+  - @DynamoDBHashKey asin : String
+  - @DynamoDBRangeKey trackNumber : Integer
+  - albumName : String
+  - songTitle : String
+}
+
+class Playlist {
+  - @DynamoDBHashKey id : String
+  - name : String
+  - customerId : String
+  - songCount : Integer
+  - tags : Set<String>
+  - songList : List<AlbumTrack>
+}
+
+interface RequestHandler
+
+class AlbumTrackNotFoundException<<exception>>
+class InvalidAttributeValueException<<exception>>
+class PlaylistNotFoundException<<exception>>
+class RuntimeException<<exception>>
+
+AlbumTrackNotFoundException ... AlbumTrack
+PlaylistNotFoundException ... Playlist
+RuntimeException <|-- AlbumTrackNotFoundException
+RuntimeException <|-- InvalidAttributeValueException
+RuntimeException <|-- PlaylistNotFoundException
+
+RequestHandler <|.. AddSongToPlaylistActivity
+RequestHandler <|.. CreatePlaylistActivity
+RequestHandler <|.. GetPlaylistActivity
+RequestHandler <|.. UpdatePlaylistActivity
+Playlist *-- AlbumTrack
+AddSongToPlaylistActivity *-- AlbumTrackDao
+AddSongToPlaylistActivity *-- PlaylistDao
+CreatePlaylistActivity *-- PlaylistDao
+GetPlaylistActivity *-- PlaylistDao
+GetPlaylistSongsActivity *-- PlaylistDao
+UpdatePlaylistActivity *-- PlaylistDao
+
+AddSongToPlaylistActivity ... AlbumTrackNotFoundException
+AddSongToPlaylistActivity ... PlaylistNotFoundException
+CreatePlaylistActivity ... InvalidAttributeValueException
+GetPlaylistActivity ... PlaylistNotFoundException
+GetPlaylistSongsActivity ... PlaylistNotFoundException
+UpdatePlaylistActivity ... PlaylistNotFoundException
+UpdatePlaylistActivity ... InvalidAttributeValueException
+
+@enduml
