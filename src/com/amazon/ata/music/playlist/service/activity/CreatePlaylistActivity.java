@@ -82,6 +82,4 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
                 .build();
     }
 
-    // TODO: populate Playlist object and save to dynamodb.
-    // convert Playlist object to Playlist model and return that in result.
 }
