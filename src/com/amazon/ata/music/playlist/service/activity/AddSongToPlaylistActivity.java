@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,6 +85,14 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
         playlist.setSongList(songList);
 
         playlistDao.savePlaylist(playlist);
+
+//        Playlist playlist = playlistDao.getPlaylist(getPlaylistSongsRequest.getId());
+//        List<AlbumTrack> songList = playlist.getSongList();
+//        List<SongModel> songModelList = new ArrayList<>();
+//        for (AlbumTrack track : songList) {
+//            SongModel songModel = new ModelConverter().toSongModel(track);
+//            songModelList.add(songModel);
+//        }
 
         new SongModel();
         SongModel songModel;

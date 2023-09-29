@@ -65,10 +65,8 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
             songModelList.add(songModel);
         }
 
-        // List<SongModel> songModels = new ModelConverter().toSongModelList(playlist.getSongList());
-
         return GetPlaylistSongsResult.builder()
-                .withSongList(Collections.singletonList(new SongModel()))
+                .withSongList(songModelList)
                 .build();
     }
 }
