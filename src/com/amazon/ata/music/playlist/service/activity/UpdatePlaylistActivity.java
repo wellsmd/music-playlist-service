@@ -18,6 +18,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +38,7 @@ public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequ
      *
      * @param playlistDao PlaylistDao to access the playlist table.
      */
+    @Inject
     public UpdatePlaylistActivity(PlaylistDao playlistDao) {
         this.playlistDao = playlistDao;
     }
@@ -56,39 +58,40 @@ public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequ
      * @return updatePlaylistResult result object containing the API defined {@link PlaylistModel}.
      */
     @Override
-    public UpdatePlaylistResult handleRequest (final UpdatePlaylistRequest updatePlaylistRequest, Context context) {
+    public UpdatePlaylistResult handleRequest (final UpdatePlaylistRequest updatePlaylistRequest, Context context)
+            throws InvalidAttributeChangeException, InvalidAttributeValueException {
+
         log.info("Received UpdatePlaylistRequest {}", updatePlaylistRequest);
 
-        String playlistName = updatePlaylistRequest.getName();
-
-        if (updatePlaylistRequest == null) {
-            throw new PlaylistNotFoundException("Playlist not found.");
+        if (!MusicPlaylistServiceUtils.isValidString(updatePlaylistRequest.getCustomerId())) {
+            throw new InvalidAttributeValueException();
         }
 
-        try {
-            MusicPlaylistServiceUtils.isValidString(updatePlaylistRequest.getName());
-        } catch (InvalidAttributeValueException e) {
-            System.out.println(updatePlaylistRequest.getName() + "is in the wrong format.");
-            return null;
+        if (!MusicPlaylistServiceUtils.isValidString(updatePlaylistRequest.getName())) {
+            throw new InvalidAttributeValueException();
         }
 
-        try {
-            MusicPlaylistServiceUtils.isValidString(updatePlaylistRequest.getCustomerId());
-        } catch (InvalidAttributeValueException e) {
-            System.out.println(updatePlaylistRequest.getCustomerId() + "is in the wrong format.");
-            return null;
+        Playlist playlist = playlistDao.getPlaylist(updatePlaylistRequest.getId());
+
+        if (playlist == null) {
+            throw new PlaylistNotFoundException();
         }
 
+        if (!playlist.getCustomerId().equals(updatePlaylistRequest.getCustomerId())) {
+            throw new InvalidAttributeChangeException();
+        }
 
+        playlist.setName(updatePlaylistRequest.getName());
+        playlistDao.savePlaylist(playlist);
+
+        new PlaylistModel();
+        PlaylistModel playlistModel;
+        ModelConverter converter = new ModelConverter();
+        playlistModel = converter.toPlaylistModel(playlist);
 
         return UpdatePlaylistResult.builder()
-                .withPlaylist(new PlaylistModel())
+                .withPlaylist(playlistModel)
                 .build();
     }
-
-    // Retrieve the playlist.
-    // Update the playlist. (Check for attempted update to customerId.)
-    // Save playlist to DB.
-    // Return the updated playlist.
 
 }

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +36,7 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
      *
      * @param playlistDao PlaylistDao to access the playlists table.
      */
+    @Inject
     public CreatePlaylistActivity(PlaylistDao playlistDao) {
         this.playlistDao = playlistDao;
     }
@@ -59,12 +61,11 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
         tags.add(null);
         Playlist playlist = new Playlist();
         playlist.setId(MusicPlaylistServiceUtils.generatePlaylistId());
-        try {
-            MusicPlaylistServiceUtils.isValidString(createPlaylistRequest.getName());
-        } catch (InvalidAttributeValueException e) {
-            System.out.println(createPlaylistRequest.getName() + "is in the wrong format.");
-            return null;
+
+        if (!MusicPlaylistServiceUtils.isValidString(createPlaylistRequest.getName())) {
+            throw new InvalidAttributeValueException();
         }
+
         playlist.setName(createPlaylistRequest.getName());
         playlist.setCustomerId(createPlaylistRequest.getCustomerId());
         playlist.setTags(tags);
