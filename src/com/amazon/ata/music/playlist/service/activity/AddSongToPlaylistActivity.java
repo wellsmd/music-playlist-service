@@ -86,21 +86,14 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
 
         playlistDao.savePlaylist(playlist);
 
-//        Playlist playlist = playlistDao.getPlaylist(getPlaylistSongsRequest.getId());
-//        List<AlbumTrack> songList = playlist.getSongList();
-//        List<SongModel> songModelList = new ArrayList<>();
-//        for (AlbumTrack track : songList) {
-//            SongModel songModel = new ModelConverter().toSongModel(track);
-//            songModelList.add(songModel);
-//        }
-
-        new SongModel();
-        SongModel songModel;
-        ModelConverter converter = new ModelConverter();
-        songModel = converter.toSongModel(newSong);
+        List<SongModel> songModelList = new ArrayList<>();
+        for (AlbumTrack track : songList) {
+            SongModel songModel = new ModelConverter().toSongModel(track);
+            songModelList.add(songModel);
+        }
 
         return AddSongToPlaylistResult.builder()
-                .withSongList(Collections.singletonList(songModel))
+                .withSongList(songModelList)
                 .build();
     }
 }
