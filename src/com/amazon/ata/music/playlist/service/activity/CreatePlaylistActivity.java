@@ -61,12 +61,11 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
         tags.add(null);
         Playlist playlist = new Playlist();
         playlist.setId(MusicPlaylistServiceUtils.generatePlaylistId());
-        try {
-            MusicPlaylistServiceUtils.isValidString(createPlaylistRequest.getName());
-        } catch (InvalidAttributeValueException e) {
-            System.out.println(createPlaylistRequest.getName() + "is in the wrong format.");
-            return null;
+
+        if (!MusicPlaylistServiceUtils.isValidString(createPlaylistRequest.getName())) {
+            throw new InvalidAttributeValueException();
         }
+
         playlist.setName(createPlaylistRequest.getName());
         playlist.setCustomerId(createPlaylistRequest.getCustomerId());
         playlist.setTags(tags);

@@ -63,7 +63,8 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
      *                                 API defined {@link SongModel}s
      */
     @Override
-    public AddSongToPlaylistResult handleRequest(final AddSongToPlaylistRequest addSongToPlaylistRequest, Context context) {
+    public AddSongToPlaylistResult handleRequest(final AddSongToPlaylistRequest addSongToPlaylistRequest, Context context)
+            throws PlaylistNotFoundException, AlbumTrackNotFoundException {
         log.info("Received AddSongToPlaylistRequest {} ", addSongToPlaylistRequest);
 
         Playlist playlist = playlistDao.getPlaylist(addSongToPlaylistRequest.getId());
@@ -73,7 +74,7 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
         }
 
         List<AlbumTrack> songList = playlist.getSongList();
-        AlbumTrack newSong = albumTrackDao.getAlbumTrack(addSongToPlaylistRequest.getAsin());
+        AlbumTrack newSong = albumTrackDao.getAlbumTrack(addSongToPlaylistRequest.getAsin(), addSongToPlaylistRequest.getTrackNumber());
 
         if (newSong == null) {
             throw new AlbumTrackNotFoundException();
