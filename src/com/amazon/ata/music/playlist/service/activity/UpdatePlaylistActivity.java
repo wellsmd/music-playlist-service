@@ -30,9 +30,9 @@ public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequ
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
 
-    public UpdatePlaylistActivity() {
-        playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_2)));
-    }
+//    public UpdatePlaylistActivity() {
+//        playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_2)));
+//    }
 
     /**
      * Instantiates a new UpdatePlaylistActivity object.
