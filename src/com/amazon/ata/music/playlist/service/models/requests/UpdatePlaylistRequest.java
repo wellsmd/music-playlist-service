@@ -49,8 +49,12 @@ public class UpdatePlaylistRequest {
     @Override
     public boolean equals(Object o) {
 
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         UpdatePlaylistRequest that = (UpdatePlaylistRequest) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
@@ -71,7 +75,9 @@ public class UpdatePlaylistRequest {
                 '}';
     }
 
-    public static Builder builder() { return new Builder(); }
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private String id;
@@ -97,6 +103,8 @@ public class UpdatePlaylistRequest {
             return this;
         }
 
-        public UpdatePlaylistRequest build() { return new UpdatePlaylistRequest(this); }
+        public UpdatePlaylistRequest build() {
+            return new UpdatePlaylistRequest(this);
+        }
     }
 }

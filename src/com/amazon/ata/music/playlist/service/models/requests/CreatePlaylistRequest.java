@@ -49,8 +49,12 @@ public class CreatePlaylistRequest {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CreatePlaylistRequest that = (CreatePlaylistRequest) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(customerId, that.customerId) &&
@@ -71,7 +75,9 @@ public class CreatePlaylistRequest {
                 '}';
     }
 
-    public static Builder builder() { return new Builder(); }
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private String name;
@@ -97,6 +103,8 @@ public class CreatePlaylistRequest {
             return this;
         }
 
-        public CreatePlaylistRequest build() { return new CreatePlaylistRequest(this); }
+        public CreatePlaylistRequest build() {
+            return new CreatePlaylistRequest(this);
+        }
     }
 }

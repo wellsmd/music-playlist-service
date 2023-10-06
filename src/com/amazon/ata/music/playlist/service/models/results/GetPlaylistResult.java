@@ -17,7 +17,9 @@ public class GetPlaylistResult {
         this.playlist = playlist;
     }
 
-    public static Builder builder() {return new Builder();}
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private PlaylistModel playlist;
@@ -27,6 +29,8 @@ public class GetPlaylistResult {
             return this;
         }
 
-        public GetPlaylistResult build() {return new GetPlaylistResult(this);}
+        public GetPlaylistResult build() {
+            return new GetPlaylistResult(this);
+        }
     }
 }

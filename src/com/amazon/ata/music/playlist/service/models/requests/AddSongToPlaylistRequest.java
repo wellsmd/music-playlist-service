@@ -59,8 +59,12 @@ public class AddSongToPlaylistRequest {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AddSongToPlaylistRequest that = (AddSongToPlaylistRequest) o;
         return trackNumber == that.trackNumber &&
                 queueNext == that.queueNext &&
@@ -83,7 +87,9 @@ public class AddSongToPlaylistRequest {
                 '}';
     }
 
-    public static Builder builder() {return new Builder();}
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private String id;
@@ -115,6 +121,8 @@ public class AddSongToPlaylistRequest {
             return this;
         }
 
-        public AddSongToPlaylistRequest build() { return new AddSongToPlaylistRequest(this); }
+        public AddSongToPlaylistRequest build() {
+            return new AddSongToPlaylistRequest(this);
+        }
     }
 }

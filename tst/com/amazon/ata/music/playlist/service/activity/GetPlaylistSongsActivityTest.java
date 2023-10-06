@@ -70,25 +70,25 @@ public class GetPlaylistSongsActivityTest {
                    "Expected song list to be empty but was " + result.getSongList());
     }
 
-//    @Test
-//    void handleRequest_withDefaultSongOrder_returnsDefaultOrderedPlaylistSongs() {
-//        // GIVEN
-//        Playlist playlist = PlaylistTestHelper.generatePlaylistWithNAlbumTracks(10);
-//        String playlistId = playlist.getId();
-//
-//        GetPlaylistSongsRequest request = GetPlaylistSongsRequest.builder()
-//                                              .withId(playlistId)
-//                                              .withOrder(SongOrder.DEFAULT)
-//                                              .build();
-//        when(playlistDao.getPlaylist(playlistId)).thenReturn(playlist);
-//
-//        // WHEN
-//        GetPlaylistSongsResult result = getPlaylistSongsActivity.handleRequest(request, null);
-//
-//        // THEN
-//        AlbumTrackTestHelper.assertAlbumTracksEqualSongModels(playlist.getSongList(), result.getSongList());
-//    }
-//
+    @Test
+    void handleRequest_withDefaultSongOrder_returnsDefaultOrderedPlaylistSongs() {
+        // GIVEN
+        Playlist playlist = PlaylistTestHelper.generatePlaylistWithNAlbumTracks(10);
+        String playlistId = playlist.getId();
+
+        GetPlaylistSongsRequest request = GetPlaylistSongsRequest.builder()
+                                              .withId(playlistId)
+                                              .withOrder(SongOrder.DEFAULT)
+                                              .build();
+        when(playlistDao.getPlaylist(playlistId)).thenReturn(playlist);
+
+        // WHEN
+        GetPlaylistSongsResult result = getPlaylistSongsActivity.handleRequest(request, null);
+
+        // THEN
+        AlbumTrackTestHelper.assertAlbumTracksEqualSongModels(playlist.getSongList(), result.getSongList());
+    }
+
 //    @Test
 //    void handleRequest_withReversedSongOrder_returnsReversedPlaylistSongs() {
 //        // GIVEN

@@ -19,7 +19,9 @@ public class AddSongToPlaylistResult {
         this.songList = songList;
     }
 
-    public static Builder builder() {return new Builder();}
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private List<SongModel> songList;
@@ -29,6 +31,8 @@ public class AddSongToPlaylistResult {
             return this;
         }
 
-        public AddSongToPlaylistResult build() {return new AddSongToPlaylistResult(this);}
+        public AddSongToPlaylistResult build() {
+            return new AddSongToPlaylistResult(this);
+        }
     }
 }

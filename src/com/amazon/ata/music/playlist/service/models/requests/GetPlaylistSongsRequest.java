@@ -40,8 +40,12 @@ public class GetPlaylistSongsRequest {
     @Override
     public boolean equals(Object o) {
 
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         GetPlaylistSongsRequest that = (GetPlaylistSongsRequest) o;
         return Objects.equals(id, that.id) &&
                 order == that.order;
@@ -60,7 +64,9 @@ public class GetPlaylistSongsRequest {
                 '}';
     }
 
-    public static Builder builder() { return new Builder(); }
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private String id;
@@ -80,6 +86,8 @@ public class GetPlaylistSongsRequest {
             return this;
         }
 
-        public GetPlaylistSongsRequest build() { return new GetPlaylistSongsRequest(this); }
+        public GetPlaylistSongsRequest build() {
+            return new GetPlaylistSongsRequest(this);
+        }
     }
 }
